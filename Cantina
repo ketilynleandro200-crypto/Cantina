@@ -1,0 +1,99 @@
+produtos = {}
+vendas = {}
+
+while True:
+    print("\n1 - Cadastrar produto")
+    print("2 - Registrar venda")
+    print("3 - Relatório")
+    print("4 - Sair")
+
+    opcao = input("Escolha: ")
+
+    if opcao == "1":
+        nome = input("Nome do produto: ")
+
+        if nome in produtos:
+            print("Produto já cadastrado!")
+        else:
+            preco = float(input("Preço: "))
+            produtos[nome] = preco
+            print("Produto cadastrado!")
+
+    elif opcao == "2":
+        nome = input("Produto vendido: ")
+
+        if nome not in produtos:
+            print("Produto não existe!")
+        else:
+            qtd = int(input("Quantidade: "))
+
+            if nome in vendas:
+                vendas[nome] += qtd
+            else:
+                vendas[nome] = qtd
+
+            print("Venda registrada!")
+
+    elif opcao == "3":
+        total = 0
+        mais_vendido = None
+        maior_qtd = 0
+
+        print("\n--- RELATÓRIO ---")
+
+        for produto, qtd in vendas.items():
+            preco = produtos[produto]
+            valor = preco * qtd
+            total += valor
+
+            print(f"{produto} - {qtd} unidades - R$ {valor}")
+
+            if qtd > maior_qtd:
+                maior_qtd = qtd
+                mais_vendido = produto
+
+        print(f"\nTotal arrecadado: R$ {total}")
+        print(f"Produto mais vendido: {mais_vendido}")
+
+    elif opcao == "4":
+        break
+
+
+_____________________
+ranking = {}
+
+for venda in vendas:
+    nome = venda["produto"]
+    qtd = venda["qtd"]
+
+    if nome in ranking:
+        ranking[nome] += qtd
+    else:
+        ranking[nome] = qtd
+
+ordenado = sorted(ranking.items(), key=lambda x: x[1], reverse=True)
+
+print("\nTOP 3:")
+for i in range(min(3, len(ordenado))):
+    print(ordenado[i])
+
+_________________
+from datetime import date
+
+vendas = []
+
+produto = input("Produto: ")
+qtd = int(input("Quantidade: "))
+data = str(date.today())
+
+vendas.append({
+    "produto": produto,
+    "qtd": qtd,
+    "data": data
+})
+
+_______________________
+
+vendas = [
+    {"produto": "Coxinha", "qtd": 2, "data": "13-04-2009"},
+    {"produto": "Refrigerante", "qtd": 1, "data": "12-04-2026"
